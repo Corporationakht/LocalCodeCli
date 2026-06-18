@@ -28,19 +28,19 @@ Local Code CLI routes Anthropic Messages API traffic from Claude Code (CLI and V
 
 <div align="center">
   <img src="assets/codex.png" alt="Codex CLI in action through Local Code CLI" width="700">
-  <p><em>Codex CLI using the local FCC Responses provider.</em></p>
+  <p><em>Codex CLI using the local LCC Responses provider.</em></p>
 </div>
 
 <a id="model-picker"></a>
 
 <div align="center">
   <img src="assets/cc-model-picker.png" alt="Claude Code model picker showing gateway models" width="700">
-  <p><em>Claude Code native <code>/model</code> picker with FCC gateway models.</em></p>
+  <p><em>Claude Code native <code>/model</code> picker with LCC gateway models.</em></p>
 </div>
 
 <div align="center">
-  <img src="assets/codex-model-picker.png" alt="Codex model picker showing generated FCC model catalog" width="700">
-  <p><em>Codex native <code>/model</code> picker with the generated FCC catalog.</em></p>
+  <img src="assets/codex-model-picker.png" alt="Codex model picker showing generated LCC model catalog" width="700">
+  <p><em>Codex native <code>/model</code> picker with the generated LCC catalog.</em></p>
 </div>
 
 ## Star History
@@ -59,11 +59,11 @@ Local Code CLI routes Anthropic Messages API traffic from Claude Code (CLI and V
 
 - Drop-in proxy for Claude Code's Anthropic API calls (`/v1/messages`, `/v1/models`).
 - Drop-in proxy for Codex via the OpenAI Responses API (`/v1/responses`).
-- `fcc-claude` and `fcc-codex` launchers that read the current Admin UI port and auth token each time they start.
+- `lcc-claude` and `lcc-codex` launchers that read the current Admin UI port and auth token each time they start.
 - 17 provider backends: NVIDIA NIM, OpenRouter, Google AI Studio (Gemini), DeepSeek, Mistral La Plateforme, Mistral Codestral, OpenCode Zen, OpenCode Go, Wafer, Kimi, Cerebras Inference, Groq, Fireworks AI, Z.ai, LM Studio, llama.cpp, and Ollama.
 - Per-model routing for Claude Code: send Opus, Sonnet, Haiku, and fallback traffic to different providers.
 - Native Claude Code `/model` picker support through the proxy's `/v1/models` endpoint (see [Model Picker](#model-picker)).
-- Native Codex `/model` picker support when launched through `fcc-codex`, using a generated local model catalog.
+- Native Codex `/model` picker support when launched through `lcc-codex`, using a generated local model catalog.
 - Streaming, tool use, reasoning/thinking block handling, and local request optimizations.
 - Optional Discord or Telegram bot wrapper for remote Claude Code sessions.
 - Optional Usage through the Claude Code VS Code extension.
@@ -135,23 +135,23 @@ The default model is already set to `nvidia_nim/nvidia/nemotron-3-super-120b-a12
 
 ### 4. Run Your Coding Agent
 
-Keep `fcc-server` running while you work.
+Keep `lcc-server` running while you work.
 
 **Claude Code**
 
 ```bash
-fcc-claude
+lcc-claude
 ```
 
-`fcc-claude` reads the current configured port and auth token each time it starts, sets the Claude Code environment variables (including a 190k-token `CLAUDE_CODE_AUTO_COMPACT_WINDOW` for auto-compaction), and then launches the real `claude` command. When proxy auth is disabled, it still passes `ANTHROPIC_AUTH_TOKEN=fcc-no-auth` so newer Claude Code versions do not stop at their local login gate before contacting the proxy.
+`lcc-claude` reads the current configured port and auth token each time it starts, sets the Claude Code environment variables (including a 190k-token `CLAUDE_CODE_AUTO_COMPACT_WINDOW` for auto-compaction), and then launches the real `claude` command. When proxy auth is disabled, it still passes `ANTHROPIC_AUTH_TOKEN=lcc-no-auth` so newer Claude Code versions do not stop at their local login gate before contacting the proxy.
 
 **Codex**
 
 ```bash
-fcc-codex
+lcc-codex
 ```
 
-`fcc-codex` reads the same port and auth token, registers an ephemeral `fcc` model provider that points at the local proxy's `/v1/responses` endpoint, generates a Codex model catalog from the proxy's `/v1/models` response, sets `FCC_CODEX_API_KEY` from the Admin UI auth token, strips official `OPENAI_*` credentials from the child environment, and then launches the real `codex` command. Type `/model` inside Codex to open its native picker. Pass through Codex args as usual, for example `fcc-codex exec "hello"`.
+`lcc-codex` reads the same port and auth token, registers an ephemeral `lcc` model provider that points at the local proxy's `/v1/responses` endpoint, generates a Codex model catalog from the proxy's `/v1/models` response, sets `LCC_CODEX_API_KEY` from the Admin UI auth token, strips official `OPENAI_*` credentials from the child environment, and then launches the real `codex` command. Type `/model` inside Codex to open its native picker. Pass through Codex args as usual, for example `lcc-codex exec "hello"`.
 
 ## Choose A Provider
 
@@ -353,7 +353,7 @@ In the Admin UI, keep or update `OLLAMA_BASE_URL`, then set `MODEL` to the same 
 
 ### 18. Mix Providers By Model Tier
 
-Each model tier can use a different provider by setting `MODEL_OPUS`, `MODEL_SONNET`, and `MODEL_HAIKU` in the Admin UI. Leave a tier blank to inherit `MODEL`. These tier overrides apply to Claude model names that contain `opus`, `sonnet`, or `haiku`. Codex uses the Admin `MODEL` default through `fcc-codex` unless a session requests a provider-prefixed slug directly.
+Each model tier can use a different provider by setting `MODEL_OPUS`, `MODEL_SONNET`, and `MODEL_HAIKU` in the Admin UI. Leave a tier blank to inherit `MODEL`. These tier overrides apply to Claude model names that contain `opus`, `sonnet`, or `haiku`. Codex uses the Admin `MODEL` default through `lcc-codex` unless a session requests a provider-prefixed slug directly.
 
 For example, you can route Opus to `nvidia_nim/moonshotai/kimi-k2.6`, Sonnet to `open_router/openrouter/free`, Haiku to `lmstudio/qwen3.5-coder`, and keep the fallback `MODEL` on `zai/glm-5.1`.
 
@@ -366,20 +366,20 @@ For example, you can route Opus to `nvidia_nim/moonshotai/kimi-k2.6`, Sonnet to 
 For terminal use, prefer the installed launcher:
 
 ```bash
-fcc-claude
+lcc-claude
 ```
 
-The Admin UI manages proxy config, restarts the server when runtime settings change, and `fcc-claude` reads the current Admin UI-managed port and auth token every time it starts. It also sets `CLAUDE_CODE_AUTO_COMPACT_WINDOW` to `190000` for auto-compaction. When proxy auth is blank, `fcc-claude` injects `ANTHROPIC_AUTH_TOKEN=fcc-no-auth` only to satisfy Claude Code's local login check; the proxy still treats blank auth as disabled.
+The Admin UI manages proxy config, restarts the server when runtime settings change, and `lcc-claude` reads the current Admin UI-managed port and auth token every time it starts. It also sets `CLAUDE_CODE_AUTO_COMPACT_WINDOW` to `190000` for auto-compaction. When proxy auth is blank, `lcc-claude` injects `ANTHROPIC_AUTH_TOKEN=lcc-no-auth` only to satisfy Claude Code's local login check; the proxy still treats blank auth as disabled.
 
 ### 2. Codex CLI
 
 For terminal use, prefer the installed launcher:
 
 ```bash
-fcc-codex
+lcc-codex
 ```
 
-The installer provisions Codex when it is missing (`npm install -g @openai/codex`). `fcc-codex` injects ephemeral Codex config on every launch:
+The installer provisions Codex when it is missing (`npm install -g @openai/codex`). `lcc-codex` injects ephemeral Codex config on every launch:
 
 - `model_provider=lcc`
 - `model_providers.lcc.base_url=http://127.0.0.1:<PORT>/v1`
@@ -475,7 +475,7 @@ For every integration below, change **managed proxy settings** only in the **Adm
 
 ### 1. Discord And Telegram Bots
 
-The bot wrapper runs Claude Code sessions remotely, streams progress, supports reply-based conversation branches, and can stop or clear tasks. Discord and Telegram bots use Claude Code today; use `fcc-codex` or the Codex VS Code extension for Codex sessions.
+The bot wrapper runs Claude Code sessions remotely, streams progress, supports reply-based conversation branches, and can stop or clear tasks. Discord and Telegram bots use Claude Code today; use `lcc-codex` or the Codex VS Code extension for Codex sessions.
 
 **Discord**
 
@@ -491,7 +491,7 @@ The bot wrapper runs Claude Code sessions remotely, streams progress, supports r
 
 **Configure in the Admin UI**
 
-1. With `fcc-server` running, open the **Admin UI** URL from the terminal output.
+1. With `lcc-server` running, open the **Admin UI** URL from the terminal output.
 2. In the sidebar, choose **Messaging**.
 3. Set **Messaging Platform** to **discord** or **telegram**.
 4. For Discord, paste **Discord Bot Token** and **Allowed Discord Channels**. For Telegram, paste **Telegram Bot Token** and **Allowed Telegram User ID**.

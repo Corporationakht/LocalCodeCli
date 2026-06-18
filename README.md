@@ -2,6 +2,9 @@
 
 # 🤖 Local Code CLI
 
+> [!NOTE]
+> **BIG tribute to the original developer** of Free Claude Code! This project is a rebranded and enhanced fork of the original work, continuing as **Local Code CLI**.
+
 Use Claude Code CLI, Codex CLI, their VS Code extensions, JetBrains ACP, or chat bots through your own provider-backed proxy.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
@@ -17,6 +20,18 @@ Local Code CLI routes Anthropic Messages API traffic from Claude Code (CLI and V
 [Quick Start](#quick-start) · [Providers](#choose-a-provider) · [Clients](#connect-your-client) · [Integrations](#optional-integrations) · [Development](#development)
 
 </div>
+
+## 🆕 What's New & Rebranding Details
+
+In this rebranded release (**v2.4.7**), we have migrated the project's identity from **Free Claude Code** to **Local Code CLI** (`lcc`). The following enhancements and changes are introduced:
+
+* **Brand New Graphic Assets**: Redesigned beautiful visual banner artwork, system request diagrams, and admin dashboard screenshots.
+* **New CLI Launchers**: The primary executable commands are now rebranded as `lcc-server`, `lcc-claude`, `lcc-codex`, and `lcc-init`.
+* **Full Backward Compatibility**: All legacy `fcc-*` command aliases are fully preserved, ensuring that your scripts, configurations, and existing CLI workflows continue to operate transparently.
+* **Automatic Configuration Migration**: On startup, the launcher automatically checks for existing configuration files in `~/.fcc` and migrates them safely to the new `~/.lcc` folder.
+* **Modernized Local Admin UI**: The loopback admin page features updated branding elements and refreshed typography.
+* **100% Green CI Suite**: All 1,633 automated tests, linter checks, and formatting rules have been verified and passed successfully on Windows, macOS, and Linux.
+
 
 <div align="center">
   <img src="assets/pic.png" alt="Local Code CLI in action" width="700">

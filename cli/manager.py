@@ -46,11 +46,13 @@ class CLISessionManager:
             allowed_dirs: Directories the CLI is allowed to access
             plans_directory: Directory for Claude Code CLI plan files (passed via --settings)
         """
+        import shutil
+
         self.workspace = workspace_path
         self.api_url = api_url
         self.allowed_dirs = allowed_dirs or []
         self.plans_directory = plans_directory
-        self.claude_bin = claude_bin
+        self.claude_bin = shutil.which(claude_bin) or claude_bin
         self.auth_token = auth_token
         self._client_cli_adapter = client_cli_adapter or get_client_cli_adapter()
         self._log_raw_cli_diagnostics = log_raw_cli_diagnostics

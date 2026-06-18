@@ -8,21 +8,25 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$PackageName = "free-claude-code"
-$FccHomeDirname = ".fcc"
-$FccCommands = @(
+$PackageName = "local-code-cli"
+$LccHomeDirname = ".lcc"
+$LccCommands = @(
+    "lcc-server",
+    "lcc-claude",
+    "lcc-codex",
+    "lcc-init",
+    "local-code-cli",
     "fcc-server",
     "fcc-claude",
     "fcc-codex",
-    "fcc-init",
-    "free-claude-code"
+    "fcc-init"
 )
 
 function Show-Usage {
     @"
 Usage: uninstall.ps1 [options]
 
-Removes the Free Claude Code uv tool and deletes ~/.fcc/.
+Removes the Local Code CLI uv tool and deletes ~/.lcc/.
 Does not remove uv, Claude Code, Codex, or the uv-managed Python runtime.
 
 Options:
@@ -82,10 +86,10 @@ function Add-UvToPath {
     Add-PathEntry (Join-Path $HOME ".cargo\bin")
 }
 
-function Assert-NoFccProcessesRunning {
+function Assert-NoLccProcessesRunning {
     $running = @()
 
-    foreach ($commandName in $FccCommands) {
+    foreach ($commandName in $LccCommands) {
         $processes = @(Get-Process -Name $commandName -ErrorAction SilentlyContinue)
         if ($processes.Count -gt 0) {
             $running += $commandName
@@ -93,7 +97,7 @@ function Assert-NoFccProcessesRunning {
     }
 
     if ($running.Count -gt 0) {
-        throw "Free Claude Code is still running ($($running -join ', ')). Stop those processes, then rerun uninstall."
+        throw "Local Code CLI is still running ($($running -join ', ')). Stop those processes, then rerun uninstall."
     }
 }
 
@@ -116,13 +120,13 @@ function Uninstall-FreeClaudeCode {
                 return
             }
             if (Test-MissingUvToolError -Output $output) {
-                Write-Host "Free Claude Code uv tool not installed or already removed; skipping uv tool uninstall."
+                Write-Host "Local Code CLI uv tool not installed or already removed; skipping uv tool uninstall."
                 return
             }
             if (-not [string]::IsNullOrWhiteSpace($output)) {
                 [Console]::Error.WriteLine($output)
             }
-            throw "uv tool uninstall $PackageName failed with exit code $exitCode; aborting before deleting ~/.fcc."
+            throw "uv tool uninstall $PackageName failed with exit code $exitCode; aborting before deleting ~/.lcc."
         }
         finally {
             $ErrorActionPreference = $previousErrorActionPreference
@@ -130,24 +134,24 @@ function Uninstall-FreeClaudeCode {
     }
 }
 
-function Purge-FccHome {
-    $fccHome = Join-Path $HOME $FccHomeDirname
-    if (-not (Test-Path -LiteralPath $fccHome)) {
-        Write-Host "No FCC config directory at $fccHome; skipping purge."
+function Purge-LccHome {
+    $lccHome = Join-Path $HOME $LccHomeDirname
+    if (-not (Test-Path -LiteralPath $lccHome)) {
+        Write-Host "No LCC config directory at $lccHome; skipping purge."
         return
     }
 
     $commandText = @(
         "Remove-Item",
         "-LiteralPath",
-        (Format-Argument $fccHome),
+        (Format-Argument $lccHome),
         "-Recurse",
         "-Force"
     ) -join " "
     Write-Host "+ $commandText"
 
     if (-not $DryRun) {
-        Remove-Item -LiteralPath $fccHome -Recurse -Force
+        Remove-Item -LiteralPath $lccHome -Recurse -Force
     }
 }
 
@@ -161,15 +165,15 @@ if ($RemainingArgs.Count -gt 0) {
     throw "Unknown option: $($RemainingArgs -join ' ')"
 }
 
-Write-Step "Checking for running Free Claude Code processes"
-Assert-NoFccProcessesRunning
+Write-Step "Checking for running Local Code CLI processes"
+Assert-NoLccProcessesRunning
 
-Write-Step "Removing Free Claude Code uv tool"
+Write-Step "Removing Local Code CLI uv tool"
 Uninstall-FreeClaudeCode
 
-Write-Step "Purging FCC config and data from ~/.fcc"
-Purge-FccHome
+Write-Step "Purging LCC config and data from ~/.lcc"
+Purge-LccHome
 
 Write-Host ""
-Write-Host "Free Claude Code has been removed."
+Write-Host "Local Code CLI has been removed."
 Write-Host "uv, Claude Code, Codex, and the uv-managed Python runtime were left installed."

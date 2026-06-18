@@ -243,7 +243,10 @@ class AppRuntime:
         plans_dir_abs = os.path.abspath(
             os.path.join(self.settings.claude_workspace, "plans")
         )
-        plans_directory = os.path.relpath(plans_dir_abs, workspace)
+        try:
+            plans_directory: str | None = os.path.relpath(plans_dir_abs, workspace)
+        except ValueError:
+            plans_directory = plans_dir_abs
         self.cli_manager = CLISessionManager(
             workspace_path=workspace,
             api_url=api_url,

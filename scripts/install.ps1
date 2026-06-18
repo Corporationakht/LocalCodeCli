@@ -12,7 +12,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$RepoGitUrl = "git+https://github.com/Alishahryar1/free-claude-code.git"
+$RepoGitUrl = "git+https://github.com/Corporationakht/LocalCodeCli.git"
 $PythonVersion = "3.14.0"
 $MinUvVersion = "0.11.0"
 $UvInstallUrl = "https://astral.sh/uv/install.ps1"
@@ -21,7 +21,7 @@ function Show-Usage {
     @"
 Usage: install.ps1 [options]
 
-Installs Claude Code and Codex if missing, installs or updates uv, Python 3.14.0, and Free Claude Code.
+Installs Claude Code and Codex if missing, installs or updates uv, Python 3.14.0, and Local Code CLI.
 
 Options:
   -VoiceNim              Install NVIDIA NIM voice transcription support.
@@ -335,15 +335,15 @@ function Get-PackageSpec {
     }
 
     if ($includeNim -and $includeLocal) {
-        return "free-claude-code[voice,voice_local] @ $RepoGitUrl"
+        return "local-code-cli[voice,voice_local] @ $RepoGitUrl"
     }
 
     if ($includeNim) {
-        return "free-claude-code[voice] @ $RepoGitUrl"
+        return "local-code-cli[voice] @ $RepoGitUrl"
     }
 
     if ($includeLocal) {
-        return "free-claude-code[voice_local] @ $RepoGitUrl"
+        return "local-code-cli[voice_local] @ $RepoGitUrl"
     }
 
     return $RepoGitUrl
@@ -387,10 +387,10 @@ Install-OrUpdateUv
 Write-Step "Installing Python $PythonVersion"
 Invoke-InstallCommand -FilePath "uv" -Arguments @("python", "install", $PythonVersion)
 
-Write-Step "Installing or updating Free Claude Code"
+Write-Step "Installing or updating Local Code CLI"
 Install-FreeClaudeCode
 
 Write-Host ""
-Write-Host "Free Claude Code is installed. Start the proxy with: fcc-server"
-Write-Host "Run Claude Code with: fcc-claude"
-Write-Host "Run Codex with: fcc-codex"
+Write-Host "Local Code CLI is installed. Start the proxy with: lcc-server"
+Write-Host "Run Claude Code with: lcc-claude"
+Write-Host "Run Codex with: lcc-codex"

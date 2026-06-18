@@ -24,7 +24,7 @@ def _smoke_config(tmp_path: Path) -> SmokeConfig:
         targets=DEFAULT_TARGETS,
         provider_matrix=frozenset(),
         timeout_s=45.0,
-        prompt="Reply with exactly: FCC_SMOKE_PONG",
+        prompt="Reply with exactly: LCC_SMOKE_PONG",
         claude_bin="claude",
         worker_id="test-worker",
         settings=Settings.model_construct(anthropic_auth_token=""),
@@ -38,7 +38,7 @@ def test_nvidia_nim_cli_matrix_report_shape_and_redaction(
     run = ClaudeCliRun(
         command=("claude", "-p", "redacted"),
         returncode=0,
-        stdout="FCC_NIM_BASIC secret-nim-key",
+        stdout="LCC_NIM_BASIC secret-nim-key",
         stderr="",
         duration_s=1.25,
     )
@@ -47,7 +47,7 @@ def test_nvidia_nim_cli_matrix_report_shape_and_redaction(
         full_model="nvidia_nim/z-ai/glm-5.1",
         source="nvidia_nim_cli_default",
         feature="basic_text",
-        marker="FCC_NIM_BASIC",
+        marker="LCC_NIM_BASIC",
         run=run,
         log_delta='POST /v1/messages HTTP/1.1" 200 OK secret-nim-key',
         log_path=tmp_path / "server.log",
@@ -82,7 +82,7 @@ def test_openrouter_free_cli_matrix_report_shape_and_redaction(
     run = ClaudeCliRun(
         command=("claude", "-p", "redacted"),
         returncode=0,
-        stdout="FCC_OPENROUTER_FREE_BASIC secret-openrouter-key",
+        stdout="LCC_OPENROUTER_FREE_BASIC secret-openrouter-key",
         stderr="",
         duration_s=1.25,
     )
@@ -91,7 +91,7 @@ def test_openrouter_free_cli_matrix_report_shape_and_redaction(
         full_model="open_router/openai/gpt-oss-120b:free",
         source="openrouter_free_cli_default",
         feature="basic_text",
-        marker="FCC_OPENROUTER_FREE_BASIC",
+        marker="LCC_OPENROUTER_FREE_BASIC",
         run=run,
         log_delta='POST /v1/messages HTTP/1.1" 200 OK secret-openrouter-key',
         log_path=tmp_path / "server.log",
@@ -132,7 +132,7 @@ def test_nvidia_nim_cli_matrix_regression_detection(tmp_path: Path) -> None:
         full_model="nvidia_nim/z-ai/glm-5.1",
         source="nvidia_nim_cli_default",
         feature="basic_text",
-        marker="FCC_NIM_BASIC",
+        marker="LCC_NIM_BASIC",
         run=run,
         log_delta='POST /v1/messages HTTP/1.1" 500 Internal Server Error',
         log_path=tmp_path / "server.log",
@@ -159,7 +159,7 @@ def test_nvidia_nim_cli_matrix_model_feature_failures_do_not_regress(
         full_model="nvidia_nim/z-ai/glm-5.1",
         source="nvidia_nim_cli_default",
         feature="tool_use_roundtrip",
-        marker="FCC_NIM_TOOL",
+        marker="LCC_NIM_TOOL",
         run=run,
         log_delta='POST /v1/messages HTTP/1.1" 200 OK',
         log_path=tmp_path / "server.log",
@@ -185,7 +185,7 @@ def test_nvidia_nim_cli_raw_payload_log_counts_as_proxy_request(
         full_model="nvidia_nim/z-ai/glm-5.1",
         source="nvidia_nim_cli_default",
         feature="subagent_task",
-        marker="FCC_NIM_TASK",
+        marker="LCC_NIM_TASK",
         run=run,
         log_delta="API_REQUEST: request_id=req_1 model=z-ai/glm-5.1 messages=2",
         log_path=tmp_path / "server.log",
@@ -210,7 +210,7 @@ def test_cli_matrix_missing_agent_catalog_is_harness_bug(tmp_path: Path) -> None
         full_model="open_router/openai/gpt-oss-120b:free",
         source="openrouter_free_cli_default",
         feature="subagent_task",
-        marker="FCC_OPENROUTER_FREE_TASK",
+        marker="LCC_OPENROUTER_FREE_TASK",
         run=run,
         log_delta=(
             "API_REQUEST: request_id=req_1 model=openai/gpt-oss-120b:free "
@@ -229,7 +229,7 @@ def test_cli_matrix_missing_agent_catalog_is_harness_bug(tmp_path: Path) -> None
 def test_cli_matrix_agent_catalog_without_agent_use_is_model_feature_failure(
     tmp_path: Path,
 ) -> None:
-    marker = "FCC_OPENROUTER_FREE_TASK"
+    marker = "LCC_OPENROUTER_FREE_TASK"
     run = ClaudeCliRun(
         command=("claude", "-p", "x"),
         returncode=0,
@@ -263,7 +263,7 @@ def test_cli_matrix_agent_catalog_without_agent_use_is_model_feature_failure(
 
 
 def test_cli_matrix_agent_use_result_and_marker_pass(tmp_path: Path) -> None:
-    marker = "FCC_OPENROUTER_FREE_TASK"
+    marker = "LCC_OPENROUTER_FREE_TASK"
     run = ClaudeCliRun(
         command=("claude", "-p", "x"),
         returncode=0,
@@ -301,7 +301,7 @@ def test_cli_matrix_agent_use_result_and_marker_pass(tmp_path: Path) -> None:
 def test_cli_matrix_agent_prompt_text_without_tool_evidence_does_not_pass(
     tmp_path: Path,
 ) -> None:
-    marker = "FCC_OPENROUTER_FREE_TASK"
+    marker = "LCC_OPENROUTER_FREE_TASK"
     run = ClaudeCliRun(
         command=("claude", "-p", "x"),
         returncode=0,
@@ -346,7 +346,7 @@ def test_cli_matrix_structured_provider_error_is_upstream_unavailable(
         full_model="open_router/poolside/laguna-m.1:free",
         source="openrouter_free_cli_default",
         feature="tool_use_roundtrip",
-        marker="FCC_OPENROUTER_FREE_TOOL",
+        marker="LCC_OPENROUTER_FREE_TOOL",
         run=run,
         log_delta=(
             '{"event": "api.request.received", "http_method": "POST", '
@@ -367,7 +367,7 @@ def test_nvidia_nim_cli_timeout_is_not_model_missing(
     run = ClaudeCliRun(
         command=("claude", "-p", "x"),
         returncode=None,
-        stdout='{"type":"assistant","content":[{"type":"text","text":"FCC_NIM_TOOL"}]}',
+        stdout='{"type":"assistant","content":[{"type":"text","text":"LCC_NIM_TOOL"}]}',
         stderr="",
         duration_s=45.0,
         timed_out=True,
@@ -377,7 +377,7 @@ def test_nvidia_nim_cli_timeout_is_not_model_missing(
         full_model="nvidia_nim/z-ai/glm-5.1",
         source="nvidia_nim_cli_default",
         feature="tool_use_roundtrip",
-        marker="FCC_NIM_TOOL",
+        marker="LCC_NIM_TOOL",
         run=run,
         log_delta="API_REQUEST: request_id=req_1 model=z-ai/glm-5.1 messages=2",
         log_path=tmp_path / "server.log",
@@ -392,7 +392,7 @@ def test_nvidia_nim_cli_success_beats_verbose_timeout_words(tmp_path: Path) -> N
     run = ClaudeCliRun(
         command=("claude", "-p", "x"),
         returncode=0,
-        stdout="FCC_NIM_THINK",
+        stdout="LCC_NIM_THINK",
         stderr="",
         duration_s=0.1,
     )
@@ -401,7 +401,7 @@ def test_nvidia_nim_cli_success_beats_verbose_timeout_words(tmp_path: Path) -> N
         full_model="nvidia_nim/z-ai/glm-5.1",
         source="nvidia_nim_cli_default",
         feature="thinking",
-        marker="FCC_NIM_THINK",
+        marker="LCC_NIM_THINK",
         run=run,
         log_delta=(
             "API_REQUEST: request_id=req_1 model=z-ai/glm-5.1 messages=1 "
@@ -429,7 +429,7 @@ def test_cli_matrix_uuid_429_does_not_count_as_upstream_unavailable(
         full_model="open_router/openai/gpt-oss-120b:free",
         source="openrouter_free_cli_default",
         feature="subagent_task",
-        marker="FCC_OPENROUTER_FREE_TASK",
+        marker="LCC_OPENROUTER_FREE_TASK",
         run=run,
         log_delta="API_REQUEST: request_id=req_1 model=openai/gpt-oss-120b:free messages=2",
         log_path=tmp_path / "server.log",
@@ -454,7 +454,7 @@ def test_cli_matrix_real_http_429_counts_as_upstream_unavailable(
         full_model="open_router/openai/gpt-oss-120b:free",
         source="openrouter_free_cli_default",
         feature="subagent_task",
-        marker="FCC_OPENROUTER_FREE_TASK",
+        marker="LCC_OPENROUTER_FREE_TASK",
         run=run,
         log_delta=(
             "API_REQUEST: request_id=req_1 model=openai/gpt-oss-120b:free "

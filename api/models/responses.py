@@ -19,7 +19,7 @@ class TokenCountResponse(BaseModel):
 class ModelResponse(BaseModel):
     object: Literal["model"] = "model"
     created: int = 0
-    owned_by: str = "free-claude-code"
+    owned_by: str = "local-code-cli"
     created_at: str
     display_name: str
     id: str

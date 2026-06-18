@@ -8,7 +8,7 @@ import pytest
 from config.settings import Settings
 from messaging.platforms.factory import create_messaging_platform
 from providers.registry import PROVIDER_DESCRIPTORS, build_provider_config
-from smoke.lib.child_process import cmd_free_claude_code_serve, cmd_python_c
+from smoke.lib.child_process import cmd_local_code_cli_serve, cmd_python_c
 from smoke.lib.config import SmokeConfig
 from smoke.lib.e2e import SmokeServerDriver
 
@@ -171,7 +171,7 @@ def test_entrypoint_server_e2e(smoke_config: SmokeConfig) -> None:
     with SmokeServerDriver(
         smoke_config,
         name="product-entrypoint",
-        command=cmd_free_claude_code_serve(),
+        command=cmd_local_code_cli_serve(),
         env_overrides={"MESSAGING_PLATFORM": "none"},
     ).run() as server:
         assert server.process.poll() is None

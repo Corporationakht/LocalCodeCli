@@ -134,6 +134,7 @@ class CLISession:
             try:
                 self.process = await asyncio.create_subprocess_exec(
                     *invocation.argv,
+                    stdin=asyncio.subprocess.DEVNULL,
                     stdout=asyncio.subprocess.PIPE,
                     stderr=asyncio.subprocess.PIPE,
                     cwd=invocation.cwd,

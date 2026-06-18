@@ -16,8 +16,8 @@ pytestmark = [pytest.mark.live]
 def test_voice_local_backend_e2e(smoke_config: SmokeConfig, tmp_path: Path) -> None:
     if not smoke_config.settings.voice_note_enabled:
         pytest.skip("missing_env: VOICE_NOTE_ENABLED is false")
-    if os.getenv("FCC_SMOKE_RUN_VOICE") != "1":
-        pytest.skip("missing_env: set FCC_SMOKE_RUN_VOICE=1 to run voice product smoke")
+    if os.getenv("LCC_SMOKE_RUN_VOICE") != "1":
+        pytest.skip("missing_env: set LCC_SMOKE_RUN_VOICE=1 to run voice product smoke")
     if smoke_config.settings.whisper_device not in {"cpu", "cuda"}:
         pytest.skip("missing_env: WHISPER_DEVICE must be cpu or cuda")
 
@@ -41,8 +41,8 @@ def test_voice_local_backend_e2e(smoke_config: SmokeConfig, tmp_path: Path) -> N
 def test_voice_nim_backend_e2e(smoke_config: SmokeConfig, tmp_path: Path) -> None:
     if not smoke_config.settings.voice_note_enabled:
         pytest.skip("missing_env: VOICE_NOTE_ENABLED is false")
-    if os.getenv("FCC_SMOKE_RUN_VOICE") != "1":
-        pytest.skip("missing_env: set FCC_SMOKE_RUN_VOICE=1 to run voice product smoke")
+    if os.getenv("LCC_SMOKE_RUN_VOICE") != "1":
+        pytest.skip("missing_env: set LCC_SMOKE_RUN_VOICE=1 to run voice product smoke")
     if smoke_config.settings.whisper_device != "nvidia_nim":
         pytest.skip("missing_env: WHISPER_DEVICE must be nvidia_nim")
     if not smoke_config.settings.nvidia_nim_api_key.strip():

@@ -44,7 +44,7 @@ class _CatalogCandidate:
 
 
 def build_codex_model_catalog(models_response: Mapping[str, Any]) -> dict[str, Any]:
-    """Convert FCC `/v1/models` data into Codex `model_catalog_json` payload."""
+    """Convert Local Code CLI `/v1/models` data into Codex `model_catalog_json` payload."""
 
     candidates = list(_catalog_candidates(models_response))
     normal_provider_refs = {
@@ -148,7 +148,7 @@ def _codex_catalog_entry(
     return {
         "slug": candidate.slug,
         "display_name": candidate.display_name,
-        "description": "Free Claude Code provider model",
+        "description": "Local Code CLI provider model",
         "default_reasoning_level": "medium",
         "supported_reasoning_levels": SUPPORTED_REASONING_LEVELS,
         "shell_type": "shell_command",

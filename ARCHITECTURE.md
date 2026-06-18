@@ -1,6 +1,6 @@
 # Architecture
 
-This document is a maintainer-oriented map of Free Claude Code. It explains the
+This document is a maintainer-oriented map of Local Code CLI. It explains the
 runtime boundaries, request flows, provider abstraction, configuration model,
 optional messaging bridge, and verification strategy.
 
@@ -10,7 +10,7 @@ and how contributors should extend it.
 
 ## System Overview
 
-Free Claude Code is a local proxy for agent clients. It accepts Anthropic
+Local Code CLI is a local proxy for agent clients. It accepts Anthropic
 Messages traffic from Claude Code clients and OpenAI Responses traffic from Codex
 clients, routes the request to a configured upstream provider, and preserves the
 wire protocol expected by the caller.
@@ -126,7 +126,7 @@ new places to add unrelated behavior:
 
 Console scripts are registered in [pyproject.toml](pyproject.toml):
 
-- `fcc-server` and `free-claude-code` call `cli.entrypoints:serve`.
+- `fcc-server` and `local-code-cli` call `cli.entrypoints:serve`.
 - `fcc-init` calls `cli.entrypoints:init`.
 - `fcc-claude` calls `cli.entrypoints:launch_claude`.
 - `fcc-codex` calls `cli.entrypoints:launch_codex`.

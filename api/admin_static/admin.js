@@ -120,7 +120,22 @@ function renderNav() {
     button.type = "button";
     button.className = `nav-link${index === 0 ? " active" : ""}`;
     button.dataset.view = view.id;
-    button.textContent = view.label;
+
+    const wrapper = document.createElement("span");
+    wrapper.className = "flex items-center gap-2.5";
+
+    let iconSvg = "";
+    if (view.id === "providers") {
+      iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>`;
+    } else if (view.id === "model_config") {
+      iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>`;
+    } else if (view.id === "messaging") {
+      iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>`;
+    }
+
+    wrapper.innerHTML = `${iconSvg}<span>${view.label}</span>`;
+    button.appendChild(wrapper);
+
     if (index === 0) {
       button.setAttribute("aria-current", "page");
     }
@@ -183,13 +198,17 @@ function renderProviders(providerStatus) {
         ? provider.base_url || "No local URL configured"
         : provider.credential_env;
 
+    const actionsDiv = document.createElement("div");
+    actionsDiv.className = "provider-actions";
+
     const button = document.createElement("button");
     button.type = "button";
     button.className = "test-button";
     button.textContent = provider.kind === "local" ? "Test" : "Refresh models";
     button.addEventListener("click", () => testProvider(provider.provider_id, button));
 
-    card.append(title, meta, button);
+    actionsDiv.appendChild(button);
+    card.append(title, meta, actionsDiv);
     grid.appendChild(card);
   });
 }
@@ -441,9 +460,9 @@ async function refreshLocalStatus() {
 }
 
 async function testProvider(providerId, button) {
-  const original = button.textContent;
+  const originalHTML = button.innerHTML;
   button.disabled = true;
-  button.textContent = "Testing";
+  button.innerHTML = `<svg class="spinner" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a10 10 0 0 1 10 10"></path></svg>Testing`;
   try {
     const result = await api(`/admin/api/providers/${providerId}/test`, {
       method: "POST",
@@ -468,7 +487,7 @@ async function testProvider(providerId, button) {
     }
   } finally {
     button.disabled = false;
-    button.textContent = original;
+    button.innerHTML = originalHTML;
   }
 }
 

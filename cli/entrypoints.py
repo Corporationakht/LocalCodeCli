@@ -60,12 +60,28 @@ def _load_env_template() -> str:
     raise FileNotFoundError("Could not find bundled or source .env.example template.")
 
 
+def _migrate_fcc_to_lcc_if_needed() -> None:
+    """If ~/.lcc does not exist and ~/.fcc exists, copy it to ~/.lcc."""
+    lcc_dir = config_dir_path()
+    fcc_dir = Path.home() / ".fcc"
+    if not lcc_dir.exists() and fcc_dir.exists():
+        try:
+            shutil.copytree(fcc_dir, lcc_dir)
+            print(f"Migrated legacy configuration folder from {fcc_dir} to {lcc_dir}")
+        except Exception as exc:
+            print(
+                f"Warning: failed to migrate config folder from {fcc_dir} to {lcc_dir}: {exc}",
+                file=sys.stderr,
+            )
+
+
 def serve() -> None:
-    """Start the FastAPI server (registered as `fcc-server` script)."""
+    """Start the FastAPI server (registered as `lcc-server` script)."""
     opened_admin_browser = False
     try:
         try:
             while True:
+                _migrate_fcc_to_lcc_if_needed()
                 _migrate_legacy_env_if_missing()
                 settings = get_settings()
                 if not _run_supervised_server(
@@ -81,9 +97,9 @@ def serve() -> None:
 
 
 def _admin_browser_open_enabled() -> bool:
-    """Whether to open /admin when the server becomes reachable (FCC_OPEN_BROWSER)."""
+    """Whether to open /admin when the server becomes reachable (LCC_OPEN_BROWSER)."""
 
-    raw = os.environ.get("FCC_OPEN_BROWSER", "true").strip().lower()
+    raw = os.environ.get("LCC_OPEN_BROWSER", "true").strip().lower()
     return raw not in {"", "0", "false", "no"}
 
 
@@ -105,7 +121,7 @@ def _schedule_open_admin_browser(settings: Settings) -> None:
             time.sleep(0.15)
 
     threading.Thread(
-        target=open_when_ready, name="fcc-open-admin-browser", daemon=True
+        target=open_when_ready, name="lcc-open-admin-browser", daemon=True
     ).start()
 
 
@@ -140,7 +156,8 @@ def _run_supervised_server(settings: Settings, *, open_admin_browser: bool) -> b
 
 
 def init() -> None:
-    """Scaffold config at ~/.fcc/.env (registered as `fcc-init`)."""
+    """Scaffold config at ~/.lcc/.env (registered as `lcc-init`)."""
+    _migrate_fcc_to_lcc_if_needed()
     config_dir = config_dir_path()
     env_file = managed_env_path()
 
@@ -148,7 +165,7 @@ def init() -> None:
     if migrated_from is not None:
         print(f"Config migrated from {migrated_from} to {env_file}")
         print(
-            "Edit it to set your API keys and model preferences, then run: fcc-server"
+            "Edit it to set your API keys and model preferences, then run: lcc-server"
         )
         return
 
@@ -161,7 +178,7 @@ def init() -> None:
     template = _load_env_template()
     env_file.write_text(template, encoding="utf-8")
     print(f"Config created at {env_file}")
-    print("Edit it to set your API keys and model preferences, then run: fcc-server")
+    print("Edit it to set your API keys and model preferences, then run: lcc-server")
 
 
 def _migrate_legacy_env_if_missing() -> Path | None:
@@ -171,7 +188,7 @@ def _migrate_legacy_env_if_missing() -> Path | None:
     if env_file.exists():
         return None
 
-    # TODO: Remove after the ~/.fcc/.env migration has had a release cycle.
+    # TODO: Remove after the ~/.lcc/.env migration has had a release cycle.
     for legacy_env in legacy_env_paths():
         if not legacy_env.is_file():
             continue
@@ -215,13 +232,13 @@ def _preflight_proxy(proxy_root_url: str) -> str | None:
 
 
 def launch_claude(argv: Sequence[str] | None = None) -> None:
-    """Launch Claude Code with Free Claude Code proxy environment variables."""
+    """Launch Claude Code with Local Code CLI proxy environment variables."""
 
     _launch_client_cli(CLAUDE_CLI_ADAPTER, argv)
 
 
 def launch_codex(argv: Sequence[str] | None = None) -> None:
-    """Launch Codex CLI with Free Claude Code proxy configuration."""
+    """Launch Codex CLI with Local Code CLI proxy configuration."""
 
     _launch_client_cli(CODEX_CLI_ADAPTER, argv)
 
@@ -229,16 +246,16 @@ def launch_codex(argv: Sequence[str] | None = None) -> None:
 def _launch_client_cli(
     adapter: ClientCliAdapter, argv: Sequence[str] | None = None
 ) -> None:
-    """Launch a client CLI with Free Claude Code proxy environment variables."""
+    """Launch a client CLI with Local Code CLI proxy environment variables."""
 
     settings = get_settings()
     proxy_root_url = local_proxy_root_url(settings)
     if error := _preflight_proxy(proxy_root_url):
         print(
-            f"Free Claude Code proxy is not reachable at {proxy_root_url}: {error}",
+            f"Local Code CLI proxy is not reachable at {proxy_root_url}: {error}",
             file=sys.stderr,
         )
-        print("Start it in another terminal with: fcc-server", file=sys.stderr)
+        print("Start it in another terminal with: lcc-server", file=sys.stderr)
         raise SystemExit(1)
 
     args = list(sys.argv[1:] if argv is None else argv)
@@ -305,7 +322,7 @@ def _codex_model_catalog_config_args(
         models = catalog.get("models")
         if not isinstance(models, list) or not models:
             print(
-                "Free Claude Code warning: Codex model catalog is empty; "
+                "Local Code CLI warning: Codex model catalog is empty; "
                 "launching without model picker catalog.",
                 file=sys.stderr,
             )
@@ -314,7 +331,7 @@ def _codex_model_catalog_config_args(
         write_codex_model_catalog(catalog_path, catalog)
     except Exception as exc:
         print(
-            "Free Claude Code warning: could not prepare Codex model catalog "
+            "Local Code CLI warning: could not prepare Codex model catalog "
             f"({exc}); launching without model picker catalog.",
             file=sys.stderr,
         )

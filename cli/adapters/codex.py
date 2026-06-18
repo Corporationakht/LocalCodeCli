@@ -10,7 +10,7 @@ from loguru import logger
 
 from .base import CliInvocation, CliParseState, CliTaskRequest
 
-_CODEX_AUTH_ENV_KEY = "FCC_CODEX_API_KEY"
+_CODEX_AUTH_ENV_KEY = "LCC_CODEX_API_KEY"
 _STRIPPED_CODEX_ENV_KEYS = frozenset(
     {
         "OPENAI_API_KEY",
@@ -162,7 +162,7 @@ class CodexCliAdapter:
         """Return a Codex environment that targets the local proxy provider."""
 
         env = _base_codex_env(base_env)
-        env[_CODEX_AUTH_ENV_KEY] = auth_token.strip() or "fcc-no-auth"
+        env[_CODEX_AUTH_ENV_KEY] = auth_token.strip() or "lcc-no-auth"
         return env
 
     def build_model_catalog_config_args(self, catalog_path: str) -> list[str]:
@@ -178,7 +178,7 @@ class CodexCliAdapter:
         base_env: Mapping[str, str],
     ) -> dict[str, str]:
         env = _base_codex_env(base_env)
-        env[_CODEX_AUTH_ENV_KEY] = auth_token.strip() or "fcc-no-auth"
+        env[_CODEX_AUTH_ENV_KEY] = auth_token.strip() or "lcc-no-auth"
         env["TERM"] = "dumb"
         env["PYTHONIOENCODING"] = "utf-8"
         return env
@@ -227,15 +227,15 @@ class CodexCliAdapter:
     ) -> list[str]:
         args = [
             "-c",
-            _toml_assignment("model_provider", "fcc"),
+            _toml_assignment("model_provider", "lcc"),
             "-c",
-            _toml_assignment("model_providers.fcc.name", "Free Claude Code"),
+            _toml_assignment("model_providers.lcc.name", "Local Code CLI"),
             "-c",
-            _toml_assignment("model_providers.fcc.base_url", _ensure_v1_url(api_url)),
+            _toml_assignment("model_providers.lcc.base_url", _ensure_v1_url(api_url)),
             "-c",
-            _toml_assignment("model_providers.fcc.env_key", _CODEX_AUTH_ENV_KEY),
+            _toml_assignment("model_providers.lcc.env_key", _CODEX_AUTH_ENV_KEY),
             "-c",
-            _toml_assignment("model_providers.fcc.wire_api", "responses"),
+            _toml_assignment("model_providers.lcc.wire_api", "responses"),
         ]
         if model:
             args.extend(["-c", _toml_assignment("model", model)])

@@ -11,7 +11,7 @@ from loguru import logger
 from .base import CliInvocation, CliParseState, CliTaskRequest
 
 _AUTO_COMPACT_WINDOW = "190000"
-_NO_AUTH_SENTINEL = "fcc-no-auth"
+_NO_AUTH_SENTINEL = "lcc-no-auth"
 
 
 class ClaudeCliAdapter:

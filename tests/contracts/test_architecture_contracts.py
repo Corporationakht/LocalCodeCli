@@ -55,7 +55,7 @@ def test_root_env_example_is_the_single_template_source() -> None:
     assert not duplicate_example.exists()
 
 
-def test_root_env_example_is_packaged_for_fcc_init() -> None:
+def test_root_env_example_is_packaged_for_lcc_init() -> None:
     repo_root = Path(__file__).resolve().parents[2]
     pyproject = tomllib.loads((repo_root / "pyproject.toml").read_text("utf-8"))
 

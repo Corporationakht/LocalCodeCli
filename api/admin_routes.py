@@ -4,17 +4,21 @@ from __future__ import annotations
 
 import inspect
 import ipaddress
+import json
+import os
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
 
 import httpx
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Request
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
+from cli.manager import CLISessionManager
 from config.settings import Settings
 from config.settings import get_settings as get_cached_settings
+from messaging.event_parser import parse_cli_event
 from providers.registry import ProviderRegistry
 
 from .admin_config import (
@@ -86,10 +90,16 @@ async def admin_page(request: Request):
     return _asset_response("index.html")
 
 
+@router.get("/chat", include_in_schema=False)
+async def chat_page(request: Request):
+    require_loopback_admin(request)
+    return _asset_response("chat.html")
+
+
 @router.get("/admin/assets/{filename}", include_in_schema=False)
 async def admin_asset(filename: str, request: Request):
     require_loopback_admin(request)
-    if filename not in {"admin.css", "admin.js"}:
+    if filename not in {"admin.css", "admin.js", "chat.css", "chat.js"}:
         raise HTTPException(status_code=404, detail="Admin asset not found")
     return _asset_response(filename)
 
@@ -285,3 +295,75 @@ async def _check_local_provider(
             "base_url": base_url,
             "error_type": type(exc).__name__,
         }
+
+
+class RunAgentPayload(BaseModel):
+    """Payload to run a background agent task."""
+
+    prompt: str
+    session_id: str | None = None
+
+
+def get_or_init_cli_manager(app, settings) -> CLISessionManager:
+    """Get the active CLISessionManager from app state or initialize it dynamically."""
+    cli_manager = getattr(app.state, "cli_manager", None)
+    if cli_manager is not None:
+        return cli_manager
+
+    workspace = (
+        os.path.abspath(settings.allowed_dir) if settings.allowed_dir else os.getcwd()
+    )
+    os.makedirs(workspace, exist_ok=True)
+
+    api_url = f"http://{settings.host}:{settings.port}/v1"
+    allowed_dirs = [workspace] if settings.allowed_dir else []
+    plans_dir_abs = os.path.abspath(os.path.join(settings.claude_workspace, "plans"))
+    try:
+        plans_directory: str | None = os.path.relpath(plans_dir_abs, workspace)
+    except ValueError:
+        plans_directory = plans_dir_abs
+    cli_manager = CLISessionManager(
+        workspace_path=workspace,
+        api_url=api_url,
+        allowed_dirs=allowed_dirs,
+        plans_directory=plans_directory,
+        claude_bin=settings.claude_cli_bin,
+        auth_token=getattr(settings, "anthropic_auth_token", ""),
+        log_raw_cli_diagnostics=settings.log_raw_cli_diagnostics,
+        log_messaging_error_details=settings.log_messaging_error_details,
+    )
+    app.state.cli_manager = cli_manager
+    return cli_manager
+
+
+@router.post("/admin/api/agent/run")
+async def run_agent(payload: RunAgentPayload, request: Request):
+    """Run a task in a background Claude CLI process and stream events."""
+    require_loopback_admin(request)
+    settings = get_cached_settings()
+    cli_manager = get_or_init_cli_manager(request.app, settings)
+
+    cli_session, session_id, _is_new = await cli_manager.get_or_create_session(
+        session_id=payload.session_id
+    )
+
+    async def event_generator():
+        # Yield the session ID info first so the client can keep it
+        yield f"data: {json.dumps({'type': 'session_info', 'session_id': session_id})}\n\n"
+
+        try:
+            async for raw_event in cli_session.start_task(
+                payload.prompt, session_id=session_id
+            ):
+                parsed_events = parse_cli_event(
+                    raw_event, log_raw_cli=settings.log_raw_cli_diagnostics
+                )
+                for parsed in parsed_events:
+                    yield f"data: {json.dumps(parsed)}\n\n"
+        except Exception as e:
+            yield f"data: {json.dumps({'type': 'error', 'message': str(e)})}\n\n"
+        finally:
+            yield "data: [DONE]\n\n"
+            await cli_manager.remove_session(session_id)
+
+    return StreamingResponse(event_generator(), media_type="text/event-stream")

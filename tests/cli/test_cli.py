@@ -560,7 +560,7 @@ class TestCLISession:
                 pass
 
             env = mock_exec.call_args.kwargs["env"]
-            assert env["ANTHROPIC_AUTH_TOKEN"] == "fcc-no-auth"
+            assert env["ANTHROPIC_AUTH_TOKEN"] == "lcc-no-auth"
 
     @pytest.mark.asyncio
     async def test_start_task_allowed_dirs(self):

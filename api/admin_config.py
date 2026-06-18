@@ -796,127 +796,127 @@ FIELDS: tuple[ConfigFieldSpec, ...] = (
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_NVIDIA_NIM",
+        "LCC_SMOKE_MODEL_NVIDIA_NIM",
         "Smoke NVIDIA NIM Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_OPEN_ROUTER",
+        "LCC_SMOKE_MODEL_OPEN_ROUTER",
         "Smoke OpenRouter Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_MISTRAL",
+        "LCC_SMOKE_MODEL_MISTRAL",
         "Smoke Mistral Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_MISTRAL_CODESTRAL",
+        "LCC_SMOKE_MODEL_MISTRAL_CODESTRAL",
         "Smoke Mistral Codestral Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_DEEPSEEK",
+        "LCC_SMOKE_MODEL_DEEPSEEK",
         "Smoke DeepSeek Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_LMSTUDIO",
+        "LCC_SMOKE_MODEL_LMSTUDIO",
         "Smoke LM Studio Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_LLAMACPP",
+        "LCC_SMOKE_MODEL_LLAMACPP",
         "Smoke llama.cpp Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_OLLAMA",
+        "LCC_SMOKE_MODEL_OLLAMA",
         "Smoke Ollama Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_KIMI",
+        "LCC_SMOKE_MODEL_KIMI",
         "Smoke Kimi Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_WAFER",
+        "LCC_SMOKE_MODEL_WAFER",
         "Smoke Wafer Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_OPENCODE",
+        "LCC_SMOKE_MODEL_OPENCODE",
         "Smoke OpenCode Zen Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_OPENCODE_GO",
+        "LCC_SMOKE_MODEL_OPENCODE_GO",
         "Smoke OpenCode Go Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_ZAI",
+        "LCC_SMOKE_MODEL_ZAI",
         "Smoke Z.ai Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_FIREWORKS",
+        "LCC_SMOKE_MODEL_FIREWORKS",
         "Smoke Fireworks Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_GEMINI",
+        "LCC_SMOKE_MODEL_GEMINI",
         "Smoke Gemini Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_GROQ",
+        "LCC_SMOKE_MODEL_GROQ",
         "Smoke Groq Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_MODEL_CEREBRAS",
+        "LCC_SMOKE_MODEL_CEREBRAS",
         "Smoke Cerebras Model",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_NIM_MODELS",
+        "LCC_SMOKE_NIM_MODELS",
         "Smoke NIM Models",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_NIM_EXTRA_MODELS",
+        "LCC_SMOKE_NIM_EXTRA_MODELS",
         "Smoke NIM Extra Models",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_OPENROUTER_FREE_MODELS",
+        "LCC_SMOKE_OPENROUTER_FREE_MODELS",
         "Smoke OpenRouter Free Models",
         "smoke",
         advanced=True,
     ),
     ConfigFieldSpec(
-        "FCC_SMOKE_OPENROUTER_FREE_EXTRA_MODELS",
+        "LCC_SMOKE_OPENROUTER_FREE_EXTRA_MODELS",
         "Smoke OpenRouter Free Extra Models",
         "smoke",
         advanced=True,
@@ -933,9 +933,9 @@ def repo_env_path() -> Path:
 
 
 def explicit_env_path() -> Path | None:
-    """Return the explicit FCC_ENV_FILE path, when configured."""
+    """Return the explicit LCC_ENV_FILE path, when configured."""
 
-    if explicit := os.environ.get("FCC_ENV_FILE"):
+    if explicit := os.environ.get("LCC_ENV_FILE"):
         return Path(explicit)
     return None
 

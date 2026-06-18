@@ -164,7 +164,7 @@ def test_generated_catalog_schema_is_accepted_by_installed_codex(
         capture_output=True,
         check=False,
         text=True,
-        timeout=10,
+        timeout=30,
     )
 
     assert result.returncode == 0, result.stderr

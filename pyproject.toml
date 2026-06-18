@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "free-claude-code"
-version = "2.3.6"
+name = "local-code-cli"
+version = "2.4.7"
 description = "Middleware between Claude Code CLI (Anthropic API) and NVIDIA NIM"
 readme = "README.md"
 requires-python = ">=3.14.0"
@@ -26,8 +26,12 @@ dependencies = [
 ]
 
 [project.scripts]
+lcc-server = "cli.entrypoints:serve"
+local-code-cli = "cli.entrypoints:serve"
+lcc-init = "cli.entrypoints:init"
+lcc-claude = "cli.entrypoints:launch_claude"
+lcc-codex = "cli.entrypoints:launch_codex"
 fcc-server = "cli.entrypoints:serve"
-free-claude-code = "cli.entrypoints:serve"
 fcc-init = "cli.entrypoints:init"
 fcc-claude = "cli.entrypoints:launch_claude"
 fcc-codex = "cli.entrypoints:launch_codex"

@@ -620,8 +620,8 @@ def test_app_lifespan_flush_pending_save_exception_warning_only(tmp_path):
     registry_cleanup.assert_awaited_once()
 
 
-def test_create_app_writes_server_log_under_fcc_home(monkeypatch, tmp_path):
-    """App logging uses ~/.fcc/logs/server.log regardless of cwd."""
+def test_create_app_writes_server_log_under_lcc_home(monkeypatch, tmp_path):
+    """App logging uses ~/.lcc/logs/server.log regardless of cwd."""
     from loguru import logger
 
     import config.logging_config as logging_config_mod
@@ -640,7 +640,7 @@ def test_create_app_writes_server_log_under_fcc_home(monkeypatch, tmp_path):
     logger.complete()
 
     canonical_log = server_log_path()
-    assert canonical_log == tmp_path / ".fcc" / "logs" / "server.log"
+    assert canonical_log == tmp_path / ".lcc" / "logs" / "server.log"
     assert canonical_log.is_file()
     assert "canonical log path test" in canonical_log.read_text(encoding="utf-8")
     assert not (run_dir / "logs" / "server.log").exists()

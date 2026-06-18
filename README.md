@@ -1,30 +1,30 @@
 <div align="center">
 
-# 🤖 Free Claude Code
+# 🤖 Local Code CLI
 
 Use Claude Code CLI, Codex CLI, their VS Code extensions, JetBrains ACP, or chat bots through your own provider-backed proxy.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Python 3.14](https://img.shields.io/badge/python-3.14-3776ab.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/downloads/)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json&style=for-the-badge)](https://github.com/astral-sh/uv)
-[![Tested with Pytest](https://img.shields.io/badge/testing-Pytest-00c0ff.svg?style=for-the-badge)](https://github.com/Alishahryar1/free-claude-code/actions/workflows/tests.yml)
+[![Tested with Pytest](https://img.shields.io/badge/testing-Pytest-00c0ff.svg?style=for-the-badge)](https://github.com/Corporationakht/LocalCodeCli/actions/workflows/tests.yml)
 [![Type checking: Ty](https://img.shields.io/badge/type%20checking-ty-ffcc00.svg?style=for-the-badge)](https://pypi.org/project/ty/)
 [![Code style: Ruff](https://img.shields.io/badge/code%20formatting-ruff-f5a623.svg?style=for-the-badge)](https://github.com/astral-sh/ruff)
 [![Logging: Loguru](https://img.shields.io/badge/logging-loguru-4ecdc4.svg?style=for-the-badge)](https://github.com/Delgan/loguru)
 
-Free Claude Code routes Anthropic Messages API traffic from Claude Code (CLI and VS Code extension) and OpenAI Responses API traffic from Codex (CLI and VS Code extension) to any provider. It keeps each client's protocol stable while letting you choose free, paid, or local models through the same proxy and Admin UI.
+Local Code CLI routes Anthropic Messages API traffic from Claude Code (CLI and VS Code extension) and OpenAI Responses API traffic from Codex (CLI and VS Code extension) to any provider. It keeps each client's protocol stable while letting you choose free, paid, or local models through the same proxy and Admin UI.
 
 [Quick Start](#quick-start) · [Providers](#choose-a-provider) · [Clients](#connect-your-client) · [Integrations](#optional-integrations) · [Development](#development)
 
 </div>
 
 <div align="center">
-  <img src="assets/pic.png" alt="Free Claude Code in action" width="700">
-  <p><em>Claude Code running through the Free Claude Code proxy.</em></p>
+  <img src="assets/pic.png" alt="Local Code CLI in action" width="700">
+  <p><em>Claude Code running through the Local Code CLI proxy.</em></p>
 </div>
 
 <div align="center">
-  <img src="assets/codex.png" alt="Codex CLI in action through Free Claude Code" width="700">
+  <img src="assets/codex.png" alt="Codex CLI in action through Local Code CLI" width="700">
   <p><em>Codex CLI using the local FCC Responses provider.</em></p>
 </div>
 
@@ -43,11 +43,11 @@ Free Claude Code routes Anthropic Messages API traffic from Claude Code (CLI and
 ## Star History
 
 <div align="center">
-  <a href="https://star-history.com/#Alishahryar1/free-claude-code&Date">
+  <a href="https://star-history.com/#Corporationakht/LocalCodeCli&Date">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Alishahryar1/free-claude-code&type=Date&theme=dark">
-      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Alishahryar1/free-claude-code&type=Date">
-      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Alishahryar1/free-claude-code&type=Date" width="700">
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Corporationakht/LocalCodeCli&type=Date&theme=dark">
+      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Corporationakht/LocalCodeCli&type=Date">
+      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Corporationakht/LocalCodeCli&type=Date" width="700">
     </picture>
   </a>
 </div>
@@ -75,37 +75,37 @@ Free Claude Code routes Anthropic Messages API traffic from Claude Code (CLI and
 macOS/Linux:
 
 ```bash
-curl -fsSL "https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/install.sh?raw=1" | sh
+curl -fsSL "https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/install.sh?raw=1" | sh
 ```
 
 Windows PowerShell:
 
 ```powershell
-irm "https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/install.ps1?raw=1" | iex
+irm "https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/install.ps1?raw=1" | iex
 ```
 
-Review the installers at [scripts/install.sh](https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/install.sh) and [scripts/install.ps1](https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/install.ps1). They install Claude Code and Codex when missing, then install or update the proxy. Re-run these commands to update to the latest version.
+Review the installers at [scripts/install.sh](https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/install.sh) and [scripts/install.ps1](https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/install.ps1). They install Claude Code and Codex when missing, then install or update the proxy. Re-run these commands to update to the latest version.
 
-To remove only Free Claude Code (not uv, Claude Code, Codex, or the uv-managed Python runtime):
+To remove only Local Code CLI (not uv, Claude Code, Codex, or the uv-managed Python runtime):
 
 macOS/Linux:
 
 ```bash
-curl -fsSL "https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/scripts/uninstall.sh" | sh
+curl -fsSL "https://raw.githubusercontent.com/Corporationakht/LocalCodeCli/main/scripts/uninstall.sh" | sh
 ```
 
 Windows PowerShell:
 
 ```powershell
-irm "https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/scripts/uninstall.ps1" | iex
+irm "https://raw.githubusercontent.com/Corporationakht/LocalCodeCli/main/scripts/uninstall.ps1" | iex
 ```
 
-Review [scripts/uninstall.sh](https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/uninstall.sh) and [scripts/uninstall.ps1](https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/uninstall.ps1). They remove the FCC uv tool and always delete `~/.fcc/`. Stop any running `fcc-server`, `fcc-claude`, `fcc-codex`, `fcc-init`, or `free-claude-code` process before uninstalling.
+Review [scripts/uninstall.sh](https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/uninstall.sh) and [scripts/uninstall.ps1](https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/uninstall.ps1). They remove the LCC uv tool and always delete `~/.lcc/`. Stop any running `lcc-server`, `lcc-claude`, `lcc-codex`, `lcc-init`, or `local-code-cli` process before uninstalling.
 
 ### 2. Start The Proxy
 
 ```bash
-fcc-server
+lcc-server
 ```
 
 After startup, Uvicorn prints the proxy bind address and the app logs the admin URL:
@@ -378,13 +378,13 @@ fcc-codex
 
 The installer provisions Codex when it is missing (`npm install -g @openai/codex`). `fcc-codex` injects ephemeral Codex config on every launch:
 
-- `model_provider=fcc`
-- `model_providers.fcc.base_url=http://127.0.0.1:<PORT>/v1`
-- `model_providers.fcc.env_key=FCC_CODEX_API_KEY`
-- `model_providers.fcc.wire_api=responses`
-- `model_catalog_json=~/.fcc/codex-model-catalog.json`
+- `model_provider=lcc`
+- `model_providers.lcc.base_url=http://127.0.0.1:<PORT>/v1`
+- `model_providers.lcc.env_key=LCC_CODEX_API_KEY`
+- `model_providers.lcc.wire_api=responses`
+- `model_catalog_json=~/.lcc/codex-model-catalog.json`
 
-The Admin UI auth token is reused as `FCC_CODEX_API_KEY`. Official OpenAI credentials are stripped from the child environment so traffic stays on the local proxy. The generated model catalog lets Codex's native `/model` picker list provider-selectable FCC model slugs. If the catalog cannot be fetched or written, `fcc-codex` warns and still launches without picker injection.
+The Admin UI auth token is reused as `LCC_CODEX_API_KEY`. Official OpenAI credentials are stripped from the child environment so traffic stays on the local proxy. The generated model catalog lets Codex's native `/model` picker list provider-selectable LCC model slugs. If the catalog cannot be fetched or written, `lcc-codex` warns and still launches without picker injection.
 
 **Advanced manual setup**
 
@@ -392,15 +392,15 @@ If you launch `codex` directly, point it at the proxy with equivalent config:
 
 ```bash
 codex \
-  -c 'model_provider="fcc"' \
-  -c 'model_providers.fcc.name="Free Claude Code"' \
-  -c 'model_providers.fcc.base_url="http://127.0.0.1:8082/v1"' \
-  -c 'model_providers.fcc.env_key="FCC_CODEX_API_KEY"' \
-  -c 'model_providers.fcc.wire_api="responses"' \
+  -c 'model_provider="lcc"' \
+  -c 'model_providers.lcc.name="Local Code CLI"' \
+  -c 'model_providers.lcc.base_url="http://127.0.0.1:8082/v1"' \
+  -c 'model_providers.lcc.env_key="LCC_CODEX_API_KEY"' \
+  -c 'model_providers.lcc.wire_api="responses"' \
   exec "hello"
 ```
 
-Set `FCC_CODEX_API_KEY` to the same value as `ANTHROPIC_AUTH_TOKEN` in the Admin UI.
+Set `LCC_CODEX_API_KEY` to the same value as `ANTHROPIC_AUTH_TOKEN` in the Admin UI.
 
 ### 3. Claude Code in VS Code
 
@@ -421,16 +421,16 @@ Reload the extension. If the extension shows a login screen, choose the Anthropi
 
 Install the [Codex extension](https://marketplace.visualstudio.com/items?itemName=openai.chatgpt). The extension shares the same user-level Codex config as the CLI (`~/.codex/config.toml` on macOS/Linux, `%USERPROFILE%\.codex\config.toml` on Windows).
 
-Create or edit that file with the `fcc` provider pointing at your local proxy:
+Create or edit that file with the `lcc` provider pointing at your local proxy:
 
 ```toml
-model_provider = "fcc"
+model_provider = "lcc"
 model = "nvidia_nim/nvidia/nemotron-3-super-120b-a12b"
 
-[model_providers.fcc]
-name = "Free Claude Code"
+[model_providers.lcc]
+name = "Local Code CLI"
 base_url = "http://127.0.0.1:8082/v1"
-env_key = "FCC_CODEX_API_KEY"
+env_key = "LCC_CODEX_API_KEY"
 wire_api = "responses"
 ```
 
@@ -440,7 +440,7 @@ Store the proxy auth token in `~/.codex/auth.json` (or the Windows equivalent):
 
 ```json
 {
-  "FCC_CODEX_API_KEY": "freecc"
+  "LCC_CODEX_API_KEY": "freecc"
 }
 ```
 
@@ -509,48 +509,48 @@ The bot wrapper runs Claude Code sessions remotely, streams progress, supports r
 
 ### 2. Voice Notes
 
-Voice notes work on Discord and Telegram after you extend your [Free Claude Code install](#1-fast-install) with the matching optional extras.
+Voice notes work on Discord and Telegram after you extend your [Local Code CLI install](#1-fast-install) with the matching optional extras.
 
 macOS/Linux:
 
 ```bash
 # NVIDIA NIM transcription (Riva gRPC)
-curl -fsSL "https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/install.sh?raw=1" | sh -s -- --voice-nim
+curl -fsSL "https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/install.sh?raw=1" | sh -s -- --voice-nim
 
 # Local Whisper (CPU or CUDA)
-curl -fsSL "https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/install.sh?raw=1" | sh -s -- --voice-local
+curl -fsSL "https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/install.sh?raw=1" | sh -s -- --voice-local
 
 # Both backends
-curl -fsSL "https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/install.sh?raw=1" | sh -s -- --voice-all
+curl -fsSL "https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/install.sh?raw=1" | sh -s -- --voice-all
 
 # Local Whisper with CUDA
-curl -fsSL "https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/install.sh?raw=1" | sh -s -- --voice-local --torch-backend cu130
+curl -fsSL "https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/install.sh?raw=1" | sh -s -- --voice-local --torch-backend cu130
 ```
 
 Windows PowerShell:
 
 ```powershell
 # NVIDIA NIM transcription (Riva gRPC)
-& ([scriptblock]::Create((irm "https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/install.ps1?raw=1"))) -VoiceNim
+& ([scriptblock]::Create((irm "https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/install.ps1?raw=1"))) -VoiceNim
 
 # Local Whisper (CPU or CUDA)
-& ([scriptblock]::Create((irm "https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/install.ps1?raw=1"))) -VoiceLocal
+& ([scriptblock]::Create((irm "https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/install.ps1?raw=1"))) -VoiceLocal
 
 # Both backends
-& ([scriptblock]::Create((irm "https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/install.ps1?raw=1"))) -VoiceAll
+& ([scriptblock]::Create((irm "https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/install.ps1?raw=1"))) -VoiceAll
 
 # Local Whisper with CUDA
-& ([scriptblock]::Create((irm "https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/install.ps1?raw=1"))) -VoiceLocal -TorchBackend cu130
+& ([scriptblock]::Create((irm "https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/install.ps1?raw=1"))) -VoiceLocal -TorchBackend cu130
 ```
 
-Restart `fcc-server` after reinstalling.
+Restart `lcc-server` after reinstalling.
 
 In the **Admin UI**, open **Messaging** and scroll to **Voice**. Turn on **Voice Notes**, choose **Whisper Device** (`cpu`, `cuda`, or `nvidia_nim`), set **Whisper Model**, and enter **Hugging Face Token** when your setup needs it. For **nvidia_nim** transcription, install the `voice` extra and set **NVIDIA NIM API Key** on the **Providers** view. The screenshot above shows the **Voice** block in the same view.
 
 ## How It Works
 
 <div align="center">
-  <img src="assets/how-it-works.svg" alt="Free Claude Code request flow architecture" width="900">
+  <img src="assets/how-it-works.svg" alt="Local Code CLI request flow architecture" width="900">
 </div>
 
 Diagram source: [`assets/how-it-works.mmd`](assets/how-it-works.mmd).
@@ -560,7 +560,7 @@ Important pieces:
 - FastAPI exposes Anthropic-compatible routes such as `/v1/messages`, `/v1/messages/count_tokens`, and `/v1/models`, plus OpenAI Responses at `/v1/responses`.
 - Claude Code sends Anthropic Messages; Codex sends OpenAI Responses SSE to the same proxy.
 - Responses requests convert to Anthropic Messages internally, then share the same model router, normalizer, and provider adapters.
-- `fcc-codex` registers a custom `fcc` provider that points Codex at the local proxy's `/v1/responses` endpoint.
+- `lcc-codex` registers a custom `lcc` provider that points Codex at the local proxy's `/v1/responses` endpoint.
 - Model routing resolves Claude model names to `MODEL_OPUS`, `MODEL_SONNET`, `MODEL_HAIKU`, or `MODEL`.
 - NIM, OpenCode Zen, and OpenCode Go use OpenAI chat streaming translated into Anthropic SSE.
 - Wafer, OpenRouter, DeepSeek, Kimi, Fireworks AI, Z.ai, LM Studio, llama.cpp, and Ollama use Anthropic Messages style transports where applicable (with provider-specific quirks and model-list URLs).
@@ -572,7 +572,7 @@ Important pieces:
 ### 1. Project Structure
 
 ```text
-free-claude-code/
+local-code-cli/
 ├── server.py              # ASGI entry point
 ├── api/                   # FastAPI routes, service layer, routing, optimizations
 ├── core/                  # Shared Anthropic protocol helpers, SSE, OpenAI Responses
@@ -589,8 +589,8 @@ free-claude-code/
 Use this path if you are developing or want to run directly from a checkout:
 
 ```bash
-git clone https://github.com/Alishahryar1/free-claude-code.git
-cd free-claude-code
+git clone https://github.com/Corporationakht/LocalCodeCli.git
+cd LocalCodeCli
 uv run uvicorn server:app --host 0.0.0.0 --port 8082
 ```
 
@@ -623,11 +623,11 @@ CI also enforces a ban on `# type: ignore` / `# ty: ignore` suppressions; `scrip
 
 `pyproject.toml` installs:
 
-- `fcc-server`: starts the proxy with configured host and port.
-- `fcc-init`: optional advanced scaffold for `~/.fcc/.env`; prefer the **Admin UI** for normal configuration.
-- `fcc-claude`: launches Claude Code with the configured local proxy URL, an auth-token env var or `fcc-no-auth` sentinel, model discovery flag, and a 190k `CLAUDE_CODE_AUTO_COMPACT_WINDOW` for auto-compaction.
-- `fcc-codex`: launches Codex with ephemeral `fcc` provider config pointing at the local proxy's `/v1/responses` endpoint, a generated native `/model` picker catalog, and `FCC_CODEX_API_KEY` from the Admin UI auth token.
-- `free-claude-code`: compatibility alias for `fcc-server`.
+- `lcc-server`: starts the proxy with configured host and port.
+- `lcc-init`: optional advanced scaffold for `~/.lcc/.env`; prefer the **Admin UI** for normal configuration.
+- `lcc-claude`: launches Claude Code with the configured local proxy URL, an auth-token env var or `lcc-no-auth` sentinel, model discovery flag, and a 190k `CLAUDE_CODE_AUTO_COMPACT_WINDOW` for auto-compaction.
+- `lcc-codex`: launches Codex with ephemeral `lcc` provider config pointing at the local proxy's `/v1/responses` endpoint, a generated native `/model` picker catalog, and `LCC_CODEX_API_KEY` from the Admin UI auth token.
+- `local-code-cli`: compatibility alias for `lcc-server`.
 
 ### 5. Extending
 
@@ -640,7 +640,7 @@ CI also enforces a ban on `# type: ignore` / `# ty: ignore` suppressions; `scrip
 ## Contributing
 
 - [`.env.example`](.env.example) lists env key names as a read-only reference for contributors; use the **Admin UI** to change managed proxy settings.
-- Report bugs and feature requests in [Issues](https://github.com/Alishahryar1/free-claude-code/issues). For bug always include all model mapping, current model when issue occured and the issue string
+- Report bugs and feature requests in [Issues](https://github.com/Corporationakht/LocalCodeCli/issues). For bug always include all model mapping, current model when issue occured and the issue string
 - Keep changes small and covered by focused tests.
 - Do not open Docker integration PRs.
 - Do not open README change PRs just open an issue for it.

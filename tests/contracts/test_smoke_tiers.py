@@ -15,7 +15,7 @@ def test_smoke_readme_uses_env_gated_serial_commands() -> None:
     repo_root = Path(__file__).resolve().parents[2]
     text = (repo_root / "smoke" / "README.md").read_text(encoding="utf-8")
 
-    assert "FCC_LIVE_SMOKE=1" in text
+    assert "LCC_LIVE_SMOKE=1" in text
     assert "-n 0" in text
     assert "-m live" not in text
 

@@ -33,7 +33,7 @@ def _env_files() -> tuple[Path, ...]:
         Path(".env"),
         managed_env_path(),
     ]
-    if explicit := os.environ.get("FCC_ENV_FILE"):
+    if explicit := os.environ.get("LCC_ENV_FILE"):
         files.append(Path(explicit))
     return tuple(files)
 

@@ -1,74 +1,91 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Free Claude Code Admin</title>
+    <title>Local Code CLI Admin</title>
     <link rel="icon" href="data:," />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/admin/assets/admin.css" />
   </head>
   <body>
+    <!-- Background Ambient Glow Blobs -->
+    <div class="ambient-blob blob-1"></div>
+    <div class="ambient-blob blob-2"></div>
+
     <div class="app-shell">
+      <!-- Sidebar Panel -->
       <aside class="sidebar">
         <div class="brand">
           <div class="brand-mark">FC</div>
           <div>
-            <h1>Free Claude Code</h1>
-            <p>Server Control</p>
+            <h1>Local Code CLI</h1>
+            <p>Server Control Panel</p>
           </div>
         </div>
-        <nav id="sectionNav" class="section-nav" aria-label="Admin views"></nav>
+        
+        <!-- Navigation Section -->
+        <nav id="sectionNav" class="section-nav" aria-label="Menu Admin"></nav>
+        
+        <div class="sidebar-divider"></div>
+        
+        <div class="section-nav">
+          <a href="/chat" class="nav-link chat-link" style="text-decoration: none;">
+            <span class="flex items-center gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <span>Asisten Chat Agen</span>
+            </span>
+            <span class="chat-badge">LIVE</span>
+          </a>
+        </div>
       </aside>
 
+      <!-- Main Workspace Container -->
       <main class="main">
         <header class="topbar">
           <div>
-            <h2 id="pageTitle">Providers</h2>
+            <h2 id="pageTitle">Penyedia Layanan</h2>
           </div>
         </header>
 
         <div id="adminViews" class="admin-views">
+          <!-- Views: Providers Section -->
           <section id="view-providers" class="admin-view active" data-view="providers">
-            <section class="provider-strip" aria-label="Provider status">
+            <section class="provider-strip" aria-label="Status Provider">
               <div class="strip-header">
-                <h3>Providers</h3>
+                <h3>Penyedia Layanan (Providers)</h3>
               </div>
               <div id="providerGrid" class="provider-grid"></div>
             </section>
-            <div
-              id="providersSections"
-              class="form-sections"
-              aria-label="Provider configuration"
-            ></div>
+            <div id="providersSections" class="form-sections" aria-label="Konfigurasi Provider"></div>
           </section>
 
+          <!-- Views: Model Config Section -->
           <section id="view-model_config" class="admin-view" data-view="model_config" hidden>
-            <div
-              id="modelConfigSections"
-              class="form-sections"
-              aria-label="Model configuration"
-            ></div>
+            <div id="modelConfigSections" class="form-sections" aria-label="Konfigurasi Model"></div>
           </section>
 
+          <!-- Views: Messaging Section -->
           <section id="view-messaging" class="admin-view" data-view="messaging" hidden>
-            <div
-              id="messagingSections"
-              class="form-sections"
-              aria-label="Messaging configuration"
-            ></div>
+            <div id="messagingSections" class="form-sections" aria-label="Konfigurasi Messaging"></div>
           </section>
         </div>
       </main>
 
-      <footer class="action-bar">
-        <div class="action-meta">
-          <strong id="dirtyState">No changes</strong>
-          <span id="configPath"></span>
-        </div>
-        <div id="messageArea" class="message-area"></div>
-        <div class="action-buttons">
-          <button id="validateButton" class="secondary-button" type="button">Validate</button>
-          <button id="applyButton" class="primary-button" type="button" disabled>Apply</button>
+      <!-- Floating Action Dock -->
+      <footer class="action-bar-wrapper">
+        <div class="action-bar-container">
+          <div class="action-meta">
+            <strong id="dirtyState">Tidak ada perubahan</strong>
+            <span id="configPath"></span>
+          </div>
+          <div id="messageArea" class="message-area"></div>
+          <div class="action-buttons">
+            <button id="validateButton" class="secondary-button" type="button">Validasi</button>
+            <button id="applyButton" class="primary-button" type="button" disabled>Terapkan</button>
+          </div>
         </div>
       </footer>
     </div>

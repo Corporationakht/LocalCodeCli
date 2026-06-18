@@ -54,8 +54,8 @@ def test_install_sh_installs_codex_only_when_missing() -> None:
     assert body.index("return 0") < body.index("run npm install")
     assert 'step "Installing Codex if missing"\ninstall_codex_if_missing' in main
     assert "npm install -g @openai/codex" not in main
-    assert "fcc-claude" in text
-    assert "fcc-codex" in text
+    assert "lcc-claude" in text
+    assert "lcc-codex" in text
 
 
 def test_install_sh_installs_missing_uv_without_self_update() -> None:
@@ -140,8 +140,8 @@ def test_install_ps1_installs_codex_only_when_missing() -> None:
     assert body.index("Get-Command codex") < body.index("Invoke-InstallCommand")
     assert body.index("return") < body.index("Invoke-InstallCommand")
     assert 'Write-Step "Installing Codex if missing"\nInstall-CodexIfMissing' in text
-    assert "fcc-claude" in text
-    assert "fcc-codex" in text
+    assert "lcc-claude" in text
+    assert "lcc-codex" in text
 
 
 def test_install_ps1_installs_missing_uv_without_self_update() -> None:

@@ -141,7 +141,7 @@ def test_claude_adapter_uses_sentinel_auth_when_proxy_auth_blank() -> None:
         },
     )
 
-    assert invocation.env["ANTHROPIC_AUTH_TOKEN"] == "fcc-no-auth"
+    assert invocation.env["ANTHROPIC_AUTH_TOKEN"] == "lcc-no-auth"
     assert "ANTHROPIC_API_KEY" not in invocation.env
 
     env = CLAUDE_CLI_ADAPTER.build_launcher_env(
@@ -153,7 +153,7 @@ def test_claude_adapter_uses_sentinel_auth_when_proxy_auth_blank() -> None:
         },
     )
 
-    assert env["ANTHROPIC_AUTH_TOKEN"] == "fcc-no-auth"
+    assert env["ANTHROPIC_AUTH_TOKEN"] == "lcc-no-auth"
     assert "ANTHROPIC_API_KEY" not in env
 
 
@@ -233,11 +233,11 @@ def test_codex_adapter_builds_new_task_command_and_env() -> None:
     assert "-C" in invocation.argv
     assert "/workspace" in invocation.argv
     assert invocation.argv[-1] == "hello"
-    assert 'model_provider="fcc"' in invocation.argv
-    assert 'model_providers.fcc.wire_api="responses"' in invocation.argv
+    assert 'model_provider="lcc"' in invocation.argv
+    assert 'model_providers.lcc.wire_api="responses"' in invocation.argv
     assert invocation.env["KEEP_ME"] == "yes"
     assert invocation.env["CODEX_HOME"] == "/tmp/codex"
-    assert invocation.env["FCC_CODEX_API_KEY"] == "proxy-token"
+    assert invocation.env["LCC_CODEX_API_KEY"] == "proxy-token"
     assert "OPENAI_API_KEY" not in invocation.env
     assert "OPENAI_BASE_URL" not in invocation.env
     assert "CODEX_API_KEY" not in invocation.env
@@ -298,10 +298,10 @@ def test_codex_adapter_launcher_command_targets_responses_provider() -> None:
     )
 
     assert command[:2] == ["codex.cmd", "-c"]
-    assert 'model_provider="fcc"' in command
-    assert 'model_providers.fcc.base_url="http://127.0.0.1:8082/v1"' in command
-    assert 'model_providers.fcc.env_key="FCC_CODEX_API_KEY"' in command
-    assert 'model_providers.fcc.wire_api="responses"' in command
+    assert 'model_provider="lcc"' in command
+    assert 'model_providers.lcc.base_url="http://127.0.0.1:8082/v1"' in command
+    assert 'model_providers.lcc.env_key="LCC_CODEX_API_KEY"' in command
+    assert 'model_providers.lcc.wire_api="responses"' in command
     assert 'model="nvidia_nim/test-model"' in command
     assert command[-2:] == ["exec", "hello"]
 
@@ -316,13 +316,13 @@ def test_codex_adapter_launcher_env_strips_openai_credentials() -> None:
             "OPENAI_API_KEY": "official-key",
             "OPENAI_BASE_URL": "https://api.openai.com/v1",
             "CODEX_API_KEY": "stale",
-            "FCC_CODEX_API_KEY": "old",
+            "LCC_CODEX_API_KEY": "old",
         },
     )
 
     assert env["PATH"] == "keep"
     assert env["CODEX_HOME"] == "/tmp/codex"
-    assert env["FCC_CODEX_API_KEY"] == "proxy-token"
+    assert env["LCC_CODEX_API_KEY"] == "proxy-token"
     assert "OPENAI_API_KEY" not in env
     assert "OPENAI_BASE_URL" not in env
     assert "CODEX_API_KEY" not in env

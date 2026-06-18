@@ -5,9 +5,9 @@ flowchart LR
     messagesApi["Anthropic API<br/>/v1/messages, /v1/models"]
     responsesApi["OpenAI Responses API<br/>/v1/responses"]
 
-    subgraph proxy["Free Claude Code Proxy :8082"]
+    subgraph proxy["Local Code CLI Proxy :8082"]
         admin["Local Admin UI<br/>keys, models, status"]
-        config[("Managed Config<br/>~/.fcc/.env")]
+        config[("Managed Config<br/>~/.lcc/.env")]
         convert["Responses Converter<br/>OpenAI to Anthropic"]
         router{"Model Router<br/>Opus / Sonnet / Haiku"}
         optimize["Request Optimizations<br/>cheap local probes"]

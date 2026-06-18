@@ -3,7 +3,7 @@
 # 🤖 Local Code CLI
 
 > [!NOTE]
-> **BIG tribute to the original developer** of Free Claude Code! This project is a rebranded and enhanced fork of the original work, continuing as **Local Code CLI**.
+> **BIG tribute to [Alishahryar1/free-claude-code](https://github.com/Alishahryar1/free-claude-code)** as the previous developer! This project is a rebranded and enhanced fork of the original work, continuing as **Local Code CLI**.
 
 Use Claude Code CLI, Codex CLI, their VS Code extensions, JetBrains ACP, or chat bots through your own provider-backed proxy.
 

@@ -28,19 +28,19 @@ Local Code CLI routes Anthropic Messages API traffic from Claude Code (CLI and V
 
 <div align="center">
   <img src="assets/codex.png" alt="Codex CLI in action through Local Code CLI" width="700">
-  <p><em>Codex CLI using the local LCC Responses provider.</em></p>
+  <p><em>Codex CLI using the local fcc Responses provider.</em></p>
 </div>
 
 <a id="model-picker"></a>
 
 <div align="center">
   <img src="assets/cc-model-picker.png" alt="Claude Code model picker showing gateway models" width="700">
-  <p><em>Claude Code native <code>/model</code> picker with LCC gateway models.</em></p>
+  <p><em>Claude Code native <code>/model</code> picker with fcc gateway models.</em></p>
 </div>
 
 <div align="center">
-  <img src="assets/codex-model-picker.png" alt="Codex model picker showing generated LCC model catalog" width="700">
-  <p><em>Codex native <code>/model</code> picker with the generated LCC catalog.</em></p>
+  <img src="assets/codex-model-picker.png" alt="Codex model picker showing generated fcc model catalog" width="700">
+  <p><em>Codex native <code>/model</code> picker with the generated fcc catalog.</em></p>
 </div>
 
 ## Star History
@@ -103,7 +103,7 @@ Windows PowerShell:
 irm "https://raw.githubusercontent.com/Corporationakht/LocalCodeCli/main/scripts/uninstall.ps1" | iex
 ```
 
-Review [scripts/uninstall.sh](https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/uninstall.sh) and [scripts/uninstall.ps1](https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/uninstall.ps1). They remove the LCC uv tool and always delete `~/.fcc/`. Stop any running `fcc-server`, `fcc-claude`, `fcc-codex`, `fcc-init`, or `local-code-cli` process before uninstalling.
+Review [scripts/uninstall.sh](https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/uninstall.sh) and [scripts/uninstall.ps1](https://github.com/Corporationakht/LocalCodeCli/blob/main/scripts/uninstall.ps1). They remove the fcc uv tool and always delete `~/.fcc/`. Stop any running `fcc-server`, `fcc-claude`, `fcc-codex`, `fcc-init`, or `local-code-cli` process before uninstalling.
 
 ### 2. Start The Proxy
 
@@ -151,7 +151,7 @@ fcc-claude
 fcc-codex
 ```
 
-`fcc-codex` reads the same port and auth token, registers an ephemeral `fcc` model provider that points at the local proxy's `/v1/responses` endpoint, generates a Codex model catalog from the proxy's `/v1/models` response, sets `LCC_CODEX_API_KEY` from the Admin UI auth token, strips official `OPENAI_*` credentials from the child environment, and then launches the real `codex` command. Type `/model` inside Codex to open its native picker. Pass through Codex args as usual, for example `fcc-codex exec "hello"`.
+`fcc-codex` reads the same port and auth token, registers an ephemeral `fcc` model provider that points at the local proxy's `/v1/responses` endpoint, generates a Codex model catalog from the proxy's `/v1/models` response, sets `fcc_CODEX_API_KEY` from the Admin UI auth token, strips official `OPENAI_*` credentials from the child environment, and then launches the real `codex` command. Type `/model` inside Codex to open its native picker. Pass through Codex args as usual, for example `fcc-codex exec "hello"`.
 
 ## Choose A Provider
 
@@ -383,11 +383,11 @@ The installer provisions Codex when it is missing (`npm install -g @openai/codex
 
 - `model_provider=fcc`
 - `model_providers.fcc.base_url=http://127.0.0.1:<PORT>/v1`
-- `model_providers.fcc.env_key=LCC_CODEX_API_KEY`
+- `model_providers.fcc.env_key=fcc_CODEX_API_KEY`
 - `model_providers.fcc.wire_api=responses`
 - `model_catalog_json=~/.fcc/codex-model-catalog.json`
 
-The Admin UI auth token is reused as `LCC_CODEX_API_KEY`. Official OpenAI credentials are stripped from the child environment so traffic stays on the local proxy. The generated model catalog lets Codex's native `/model` picker list provider-selectable LCC model slugs. If the catalog cannot be fetched or written, `fcc-codex` warns and still launches without picker injection.
+The Admin UI auth token is reused as `fcc_CODEX_API_KEY`. Official OpenAI credentials are stripped from the child environment so traffic stays on the local proxy. The generated model catalog lets Codex's native `/model` picker list provider-selectable fcc model slugs. If the catalog cannot be fetched or written, `fcc-codex` warns and still launches without picker injection.
 
 **Advanced manual setup**
 
@@ -398,12 +398,12 @@ codex \
   -c 'model_provider="fcc"' \
   -c 'model_providers.fcc.name="Local Code CLI"' \
   -c 'model_providers.fcc.base_url="http://127.0.0.1:8082/v1"' \
-  -c 'model_providers.fcc.env_key="LCC_CODEX_API_KEY"' \
+  -c 'model_providers.fcc.env_key="fcc_CODEX_API_KEY"' \
   -c 'model_providers.fcc.wire_api="responses"' \
   exec "hello"
 ```
 
-Set `LCC_CODEX_API_KEY` to the same value as `ANTHROPIC_AUTH_TOKEN` in the Admin UI.
+Set `fcc_CODEX_API_KEY` to the same value as `ANTHROPIC_AUTH_TOKEN` in the Admin UI.
 
 ### 3. Claude Code in VS Code
 
@@ -433,7 +433,7 @@ model = "nvidia_nim/nvidia/nemotron-3-super-120b-a12b"
 [model_providers.fcc]
 name = "Local Code CLI"
 base_url = "http://127.0.0.1:8082/v1"
-env_key = "LCC_CODEX_API_KEY"
+env_key = "fcc_CODEX_API_KEY"
 wire_api = "responses"
 ```
 
@@ -443,7 +443,7 @@ Store the proxy auth token in `~/.codex/auth.json` (or the Windows equivalent):
 
 ```json
 {
-  "LCC_CODEX_API_KEY": "freecc"
+  "fcc_CODEX_API_KEY": "freecc"
 }
 ```
 
@@ -629,7 +629,7 @@ CI also enforces a ban on `# type: ignore` / `# ty: ignore` suppressions; `scrip
 - `fcc-server`: starts the proxy with configured host and port.
 - `fcc-init`: optional advanced scaffold for `~/.fcc/.env`; prefer the **Admin UI** for normal configuration.
 - `fcc-claude`: launches Claude Code with the configured local proxy URL, an auth-token env var or `fcc-no-auth` sentinel, model discovery flag, and a 190k `CLAUDE_CODE_AUTO_COMPACT_WINDOW` for auto-compaction.
-- `fcc-codex`: launches Codex with ephemeral `fcc` provider config pointing at the local proxy's `/v1/responses` endpoint, a generated native `/model` picker catalog, and `LCC_CODEX_API_KEY` from the Admin UI auth token.
+- `fcc-codex`: launches Codex with ephemeral `fcc` provider config pointing at the local proxy's `/v1/responses` endpoint, a generated native `/model` picker catalog, and `fcc_CODEX_API_KEY` from the Admin UI auth token.
 - `local-code-cli`: compatibility alias for `fcc-server`.
 
 ### 5. Extending

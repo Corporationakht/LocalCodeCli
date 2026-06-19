@@ -11,7 +11,7 @@ Use Claude Code CLI, Codex CLI, their VS Code extensions, JetBrains ACP, or chat
 [![Python 3.14](https://img.shields.io/badge/python-3.14-3776ab.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/downloads/)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json&style=for-the-badge)](https://github.com/astral-sh/uv)
 [![Tested with Pytest](https://img.shields.io/badge/testing-Pytest-00c0ff.svg?style=for-the-badge)](https://github.com/Corporationakht/LocalCodeCli/actions/workflows/tests.yml)
-[![Type checking: Ty](https://img.shields.io/badge/type%20checking-ty-ffcc00.svg?style=for-the-badge)](https://pypi.org/project/ty/)
+[![Type checking: Ty](https://img.shields.io/badge/type%20checking-ty-flcc00.svg?style=for-the-badge)](https://pypi.org/project/ty/)
 [![Code style: Ruff](https://img.shields.io/badge/code%20formatting-ruff-f5a623.svg?style=for-the-badge)](https://github.com/astral-sh/ruff)
 [![Logging: Loguru](https://img.shields.io/badge/logging-loguru-4ecdc4.svg?style=for-the-badge)](https://github.com/Delgan/loguru)
 
@@ -28,19 +28,19 @@ Local Code CLI routes Anthropic Messages API traffic from Claude Code (CLI and V
 
 <div align="center">
   <img src="assets/codex.png" alt="Codex CLI in action through Local Code CLI" width="700">
-  <p><em>Codex CLI using the local LCC Responses provider.</em></p>
+  <p><em>Codex CLI using the local lcc Responses provider.</em></p>
 </div>
 
 <a id="model-picker"></a>
 
 <div align="center">
   <img src="assets/cc-model-picker.png" alt="Claude Code model picker showing gateway models" width="700">
-  <p><em>Claude Code native <code>/model</code> picker with LCC gateway models.</em></p>
+  <p><em>Claude Code native <code>/model</code> picker with lcc gateway models.</em></p>
 </div>
 
 <div align="center">
-  <img src="assets/codex-model-picker.png" alt="Codex model picker showing generated LCC model catalog" width="700">
-  <p><em>Codex native <code>/model</code> picker with the generated LCC catalog.</em></p>
+  <img src="assets/codex-model-picker.png" alt="Codex model picker showing generated lcc model catalog" width="700">
+  <p><em>Codex native <code>/model</code> picker with the generated lcc catalog.</em></p>
 </div>
 
 ## Star History
@@ -300,7 +300,7 @@ model = "gemini/models/gemini-2.0-flash"
 [model_providers.lcc]
 name = "Local Code CLI"
 base_url = "http://127.0.0.1:8082/v1"
-env_key = "LCC_CODEX_API_KEY"
+env_key = "lcc_CODEX_API_KEY"
 wire_api = "responses"
 ```
 
